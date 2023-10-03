@@ -1,0 +1,44 @@
+<기계학습 4주차 정리노트>
+1. 선형회귀 코드 이해하기
+정규방정식을 이용해서 프로그래밍을 함.
+y = 4 + 3 * X + np.random.randn(100, 1): 이 줄에서는 X에 선형 관계를 가지는 데이터를 생성하였고,
+Matplotlib을 사용하여 산점도로 표시되는 그래프로 시각화하였다.
+2. 
+theta_path_sgd = []
+m = len(X_b)
+np.random.seed(42)
+
+n_epochs = 50
+t0, t1 = 5, 50  # 학습 스케줄 하이퍼파라미터
+
+def learning_schedule(t):
+    return t0 / (t + t1)
+
+theta = np.random.randn(2,1)  # 랜덤 초기화
+
+for epoch in range(n_epochs):
+    for i in range(m):
+        if epoch == 0 and i < 20:                    # 책에는 없음
+            y_predict = X_new_b.dot(theta)           # 책에는 없음
+            style = "b-" if i > 0 else "r--"         # 책에는 없음
+            plt.plot(X_new, y_predict, style)        # 책에는 없음
+        random_index = np.random.randint(m)
+        xi = X_b[random_index:random_index+1]
+        yi = y[random_index:random_index+1]
+        gradients = 2 * xi.T.dot(xi.dot(theta) - yi)
+        eta = learning_schedule(epoch * m + i)
+        theta = theta - eta * gradients
+        theta_path_sgd.append(theta)                 # 책에는 없음
+
+plt.plot(X, y, "b.")                                 # 책에는 없음
+plt.xlabel("$x_1$", fontsize=18)                     # 책에는 없음
+plt.ylabel("$y$", rotation=0, fontsize=18)           # 책에는 없음
+plt.axis([0, 2, 0, 15])                              # 책에는 없음
+save_fig("sgd_plot")                                 # 책에는 없음
+plt.show()                                           # 책에는 없음
+
+데이터샛 x와 y를 SGD를 사용하여 선형 회귀 모델을 학습한다.
+
+3. 에포크 수 = 100회, 데이터셋 크기 = 1000개, 미니 배치 크기 = 50개
+가중치 업데이트 횟수 = 1000 / 50 = 20번,
+따라서 100회의 에포크 동안 총 100 * 20 = 2000번의 가중치 업데이트가 이루어질 것이다. 
